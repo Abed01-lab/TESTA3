@@ -27,12 +27,12 @@ class CreateEmployeeTest extends ContainerizedDbIntegrationTest {
         runMigration(2);
 
         employeeStorage = new EmployeeStorageImpl(getConnectionString(), "root", getDbPassword());
-        /*
+
         var numCustomers = employeeStorage.getEmployees().size();
         if (numCustomers < 100) {
             addFakeCustomers(100 - numCustomers);
         }
-         */
+
     }
 
     private void addFakeCustomers(int numCustomers) throws SQLException {

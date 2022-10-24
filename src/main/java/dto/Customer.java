@@ -9,6 +9,7 @@ public class Customer {
         this.firstname = firstname;
         this.lastname = lastname;
     }
+    
 
     public int getId() {
         return id;
