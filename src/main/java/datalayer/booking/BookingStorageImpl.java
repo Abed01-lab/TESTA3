@@ -56,8 +56,8 @@ public class BookingStorageImpl implements BookingStorage{
                     Time start = resultSet.getTime("start");
                     Time end = resultSet.getTime("end");
 
-                    Booking c = new Booking(id, employeeId, customerId, date, start, end);
-                    results.add(c);
+                    Booking b = new Booking(id, employeeId, customerId, date, start, end);
+                    results.add(b);
                 }
             }
 
@@ -66,15 +66,16 @@ public class BookingStorageImpl implements BookingStorage{
     }
 
     @Override
-    public Booking getBookingWithId(int bookingId) throws SQLException {
-        var sql = "select ID, customerId, employeeId, date, start, end from Bookings where ID = ?";
+    public List<Booking> getBookingsForCustomer(int inputId) throws SQLException {
+        var sql = "select ID, customerId, employeeId, date, start, end from Bookings where customerId = ?";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, bookingId);
+            stmt.setInt(1, inputId);
+            var results = new ArrayList<Booking>();
 
             try (var resultSet = stmt.executeQuery()) {
 
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     int id = resultSet.getInt("ID");
                     int customerId = resultSet.getInt("customerId");
                     int employeeId = resultSet.getInt("employeeId");
@@ -82,10 +83,37 @@ public class BookingStorageImpl implements BookingStorage{
                     Time start = resultSet.getTime("start");
                     Time end = resultSet.getTime("end");
 
-                    Booking c = new Booking(id, employeeId, customerId, date, start, end);
-                    return c;
+                    Booking b = new Booking(id, employeeId, customerId, date, start, end);
+                    results.add(b);
                 }
-                return null;
+                return results;
+            }
+
+        }
+    }
+
+    @Override
+    public List<Booking> getBookingForEmployee(int inputId) throws SQLException {
+        var sql = "select ID, customerId, employeeId, date, start, end from Bookings where employeeId = ?";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, inputId);
+            var results = new ArrayList<Booking>();
+
+            try (var resultSet = stmt.executeQuery()) {
+
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("ID");
+                    int customerId = resultSet.getInt("customerId");
+                    int employeeId = resultSet.getInt("employeeId");
+                    Date date = resultSet.getDate("date");
+                    Time start = resultSet.getTime("start");
+                    Time end = resultSet.getTime("end");
+
+                    Booking b = new Booking(id, employeeId, customerId, date, start, end);
+                    results.add(b);
+                }
+                return results;
             }
 
         }

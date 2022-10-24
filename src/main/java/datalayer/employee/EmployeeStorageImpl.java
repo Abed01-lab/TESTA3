@@ -26,12 +26,11 @@ public class EmployeeStorageImpl implements EmployeeStorage{
     }
     @Override
     public int createEmployee(EmployeeCreation employeeCreation) throws SQLException {
-        var sql = "insert into Employees(firstname, lastname, birthdate) values (?, ?, ?)";
+        var sql = "insert into Employees(firstname, lastname) values (?, ?)";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, employeeCreation.getFirstName());
             stmt.setString(2, employeeCreation.getLastName());
-            stmt.setDate(3, employeeCreation.getBirthdate());
             stmt.executeUpdate();
 
             // get the newly created id
@@ -49,15 +48,14 @@ public class EmployeeStorageImpl implements EmployeeStorage{
              var stmt = con.createStatement()) {
             var results = new ArrayList<Employee>();
 
-            try (ResultSet resultSet = stmt.executeQuery("select ID, firstname, lastname, birthdate from Employees")) {
+            try (ResultSet resultSet = stmt.executeQuery("select ID, firstname, lastname from Employees")) {
 
                 while (resultSet.next()) {
                     int id = resultSet.getInt("ID");
                     String firstname = resultSet.getString("firstname");
                     String lastname = resultSet.getString("lastname");
-                    Date birthdate = resultSet.getDate("birthdate");
 
-                    Employee c = new Employee(firstname, lastname, birthdate);
+                    Employee c = new Employee(firstname, lastname);
                     results.add(c);
                 }
             }
@@ -68,7 +66,7 @@ public class EmployeeStorageImpl implements EmployeeStorage{
 
     @Override
     public Employee getEmployeeWithId(int employeeId) throws SQLException {
-        var sql = "select ID, firstname, lastname, birthdate from Employees where id = ?";
+        var sql = "select ID, firstname, lastname from Employees where id = ?";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, employeeId);
@@ -78,8 +76,7 @@ public class EmployeeStorageImpl implements EmployeeStorage{
                     var id = resultSet.getInt("ID");
                     var firstname = resultSet.getString("firstname");
                     var lastname = resultSet.getString("lastname");
-                    var birthdate = resultSet.getDate("birthdate");
-                    return new Employee(id, firstname, lastname, birthdate);
+                    return new Employee(id, firstname, lastname);
                 }
                 return null;
             }

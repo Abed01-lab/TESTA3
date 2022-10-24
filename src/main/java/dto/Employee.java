@@ -6,20 +6,12 @@ public class Employee {
     private int id;
     private String firstName;
     private String lastName;
-    private Date birthdate;
 
 
-    public Employee(int id, String firstName, String lastName, Date birthdate) {
+    public Employee(int id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdate = birthdate;
-    }
-
-    public Employee(String firstName, String lastName, Date birthdate) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthdate = birthdate;
     }
 
     public Employee(String firstName, String lastName) {
@@ -51,11 +43,4 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
 }

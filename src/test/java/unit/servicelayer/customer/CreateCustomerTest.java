@@ -9,8 +9,8 @@ import servicelayer.customer.CustomerService;
 import servicelayer.customer.CustomerServiceException;
 import servicelayer.customer.CustomerServiceImpl;
 
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Date;
 
 import static org.mockito.Mockito.*;
 
@@ -37,7 +37,7 @@ public class CreateCustomerTest {
         // Act
         var firstName = "a";
         var lastName = "b";
-        var birthdate = new Date(123456789l);
+        var birthdate = Date.valueOf("1997-07-14");
 
         customerService.createCustomer(firstName, lastName, birthdate);
 

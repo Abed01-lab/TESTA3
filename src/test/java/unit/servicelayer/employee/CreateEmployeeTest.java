@@ -28,17 +28,14 @@ public class CreateEmployeeTest {
     public void mustCallStorageWhenCreatingEmployee () throws EmployeeServiceException, SQLException {
         var firstName = "a";
         var lastName = "b";
-        var birthdate = Date.valueOf("1997-07-14");
 
-        employeeService.createEmployee(firstName, lastName, birthdate);
+        employeeService.createEmployee(firstName, lastName );
 
         verify(storageMock)
                 .createEmployee(
                         argThat(x ->
                                 x.firstName.equals(firstName) &&
-                                x.lastName.equals(lastName) &&
-                                x.birthdate.equals(birthdate))
-                );
+                                x.lastName.equals(lastName)));
     }
 
     @Test

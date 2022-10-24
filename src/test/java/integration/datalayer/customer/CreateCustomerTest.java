@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +39,7 @@ class CreateCustomerTest extends ContainerizedDbIntegrationTest {
     private void addFakeCustomers(int numCustomers) throws SQLException {
         Faker faker = new Faker();
         for (int i = 0; i < numCustomers; i++) {
-            CustomerCreation c = new CustomerCreation(faker.name().firstName(), faker.name().lastName());
+            CustomerCreation c = new CustomerCreation(faker.name().firstName(), faker.name().lastName(), Date.valueOf("1997-07-14"));
             customerStorage.createCustomer(c);
         }
 
@@ -48,7 +49,7 @@ class CreateCustomerTest extends ContainerizedDbIntegrationTest {
     public void mustSaveCustomerInDatabaseWhenCallingCreateCustomer() throws SQLException {
         // Arrange
         // Act
-        customerStorage.createCustomer(new CustomerCreation("John","Carlssonn"));
+        customerStorage.createCustomer(new CustomerCreation("John","Carlssonn" , Date.valueOf("1997-07-14")));
 
         // Assert
         var customers = customerStorage.getCustomers();
@@ -62,8 +63,8 @@ class CreateCustomerTest extends ContainerizedDbIntegrationTest {
     public void mustReturnLatestId() throws SQLException {
         // Arrange
         // Act
-        var id1 = customerStorage.createCustomer(new CustomerCreation("a", "b"));
-        var id2 = customerStorage.createCustomer(new CustomerCreation("c", "d"));
+        var id1 = customerStorage.createCustomer(new CustomerCreation("a", "b", Date.valueOf("1997-07-14")));
+        var id2 = customerStorage.createCustomer(new CustomerCreation("c", "d", Date.valueOf("1997-07-14")));
 
         // Assert
         assertEquals(1, id2 - id1);

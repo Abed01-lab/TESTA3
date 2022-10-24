@@ -62,11 +62,12 @@ public class CustomerStorageImpl implements CustomerStorage {
     }
 
     public int createCustomer(CustomerCreation customerToCreate) throws SQLException {
-        var sql = "insert into Customers(firstname, lastname) values (?, ?)";
+        var sql = "insert into Customers(firstname, lastname, birthdate) values (?, ?, ?)";
         try (var con = getConnection();
             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, customerToCreate.getFirstname());
             stmt.setString(2, customerToCreate.getLastname());
+            stmt.setDate(3, customerToCreate.getBirthdate());
 
             stmt.executeUpdate();
 

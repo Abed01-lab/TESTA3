@@ -35,4 +35,12 @@ public class SmsMessage {
     public int hashCode() {
         return Objects.hash(recipient, message);
     }
+
+    public boolean sendSMS(int phone, String message){
+        if (message == "") return false;
+        if (Integer.toString(phone).length() < 8 || Integer.toString(phone).length() > 8) return false;
+
+        //send message
+        return true;
+    }
 }

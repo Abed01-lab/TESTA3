@@ -4,9 +4,9 @@ import datalayer.customer.CustomerStorage;
 import dto.Customer;
 import dto.CustomerCreation;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Date;
 
 public class CustomerServiceImpl implements CustomerService {
 
@@ -19,7 +19,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public int createCustomer(String firstName, String lastName, Date birthdate) throws CustomerServiceException {
         try {
-            return customerStorage.createCustomer(new CustomerCreation(firstName, lastName));
+            return customerStorage.createCustomer(new CustomerCreation(firstName, lastName, birthdate));
         } catch (SQLException throwables) {
             throw new CustomerServiceException(throwables.getMessage());
         }

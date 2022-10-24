@@ -39,7 +39,7 @@ class CreateEmployeeTest extends ContainerizedDbIntegrationTest {
     private void addFakeCustomers(int numCustomers) throws SQLException {
         Faker faker = new Faker();
         for (int i = 0; i < numCustomers; i++) {
-            EmployeeCreation c = new EmployeeCreation(faker.name().firstName(), faker.name().lastName(), Date.valueOf("2000-12-30"));
+            EmployeeCreation c = new EmployeeCreation(faker.name().firstName(), faker.name().lastName());
             employeeStorage.createEmployee(c);
         }
 
@@ -49,22 +49,21 @@ class CreateEmployeeTest extends ContainerizedDbIntegrationTest {
     public void createEmployeeTest() throws SQLException {
         // Arrange
         // Act
-        employeeStorage.createEmployee(new EmployeeCreation("John","Carlssonn", Date.valueOf("1997-07-14")));
+        employeeStorage.createEmployee(new EmployeeCreation("John","Carlssonn"));
 
         // Assert
         var employees = employeeStorage.getEmployees();
         assertTrue(
                 employees.stream().anyMatch(x ->
                         x.getFirstName().equals("John") &&
-                        x.getLastName().equals("Carlssonn") &&
-                        x.getBirthdate().equals(Date.valueOf("1997-07-14"))));
+                        x.getLastName().equals("Carlssonn")));
     }
 
     @Test
     public void getEmployeeWithIdTest() throws SQLException {
-        int id = employeeStorage.createEmployee(new EmployeeCreation("Carl", "Johnson", Date.valueOf("1997-07-14")));
+        int id = employeeStorage.createEmployee(new EmployeeCreation("Carl", "Johnson"));
         Employee e = employeeStorage.getEmployeeWithId(id);
-        assertTrue(e.getFirstName().equals("Carl") && e.getLastName().equals("Johnson") && e.getBirthdate().equals(Date.valueOf("1997-07-14")));
+        assertTrue(e.getFirstName().equals("Carl") && e.getLastName().equals("Johnson"));
     }
 
 }

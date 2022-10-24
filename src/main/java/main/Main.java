@@ -3,6 +3,7 @@ package main;
 import datalayer.employee.EmployeeStorageImpl;
 import dto.Customer;
 import datalayer.customer.CustomerStorageImpl;
+import dto.CustomerCreation;
 import dto.Employee;
 import dto.EmployeeCreation;
 import servicelayer.employee.EmployeeServiceException;
@@ -21,8 +22,10 @@ public class Main {
         CustomerStorageImpl storage = new CustomerStorageImpl(conStr, user, pass);
         EmployeeStorageImpl employeeStorage = new EmployeeStorageImpl(conStr, user, pass);
         EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl(new EmployeeStorageImpl(conStr, user, pass));
-        var id = employeeServiceImpl.createEmployee("abed", "hariri", Date.valueOf("2022-10-24"));
+        var id = employeeServiceImpl.createEmployee("abed", "hariri");
         System.out.println(employeeServiceImpl.getEmployeeById(id).getFirstName());
+
+        storage.createCustomer(new CustomerCreation("Abed", "Hariri", Date.valueOf("1997-07-14")));
 
 
 

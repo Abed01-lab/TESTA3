@@ -4,12 +4,10 @@ import java.sql.Date;
 
 public class EmployeeCreation {
     public final String firstName, lastName;
-    public final Date birthdate;
 
-    public EmployeeCreation(String firstName, String lastName, Date birthdate) {
+    public EmployeeCreation(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdate = birthdate;
     }
 
     public String getFirstName() {
@@ -20,7 +18,4 @@ public class EmployeeCreation {
         return lastName;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
-    }
 }
