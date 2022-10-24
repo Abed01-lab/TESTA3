@@ -64,4 +64,24 @@ public class EmployeeStorageImpl implements EmployeeStorage{
             return results;
         }
     }
+
+    @Override
+    public Employee getEmployeeWithId(int employeeId) throws SQLException {
+        var sql = "select ID, firstname, lastname, birthdate from Employees where id = ?";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, employeeId);
+
+            try (var resultSet = stmt.executeQuery()) {
+                if (resultSet.next()){
+                    var id = resultSet.getInt("ID");
+                    var firstname = resultSet.getString("firstname");
+                    var lastname = resultSet.getString("lastname");
+                    var birthdate = resultSet.getDate("birthdate");
+                    return new Employee(id, firstname, lastname, birthdate);
+                }
+                return null;
+            }
+        }
+    }
 }

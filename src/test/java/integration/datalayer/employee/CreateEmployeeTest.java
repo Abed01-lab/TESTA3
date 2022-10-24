@@ -1,15 +1,10 @@
 package integration.datalayer.employee;
 
 import com.github.javafaker.Faker;
-import datalayer.customer.CustomerStorage;
-import datalayer.customer.CustomerStorageImpl;
 import datalayer.employee.EmployeeStorage;
 import datalayer.employee.EmployeeStorageImpl;
-import dto.CustomerCreation;
 import dto.Employee;
 import integration.ContainerizedDbIntegrationTest;
-import org.flywaydb.core.Flyway;
-import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -22,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Tag("integration")
-class CreateCustomerTest extends ContainerizedDbIntegrationTest {
+class CreateEmployeeTest extends ContainerizedDbIntegrationTest {
     private EmployeeStorage employeeStorage;
 
     /* changed code */
@@ -62,6 +57,13 @@ class CreateCustomerTest extends ContainerizedDbIntegrationTest {
                         x.getFirstName().equals("John") &&
                         x.getLastName().equals("Carlssonn") &&
                         x.getBirthdate().equals(Date.valueOf("1997-07-14"))));
+    }
+
+    @Test
+    public void getEmployeeWithIdTest() throws SQLException {
+        int id = employeeStorage.createEmployee(new Employee("Carl", "Johnson", Date.valueOf("1997-07-14")));
+        Employee e = employeeStorage.getEmployeeWithId(id);
+        assertTrue(e.getFirstName().equals("Carl") && e.getLastName().equals("Johnson") && e.getBirthdate().equals(Date.valueOf("1997-07-14")));
     }
 
 }

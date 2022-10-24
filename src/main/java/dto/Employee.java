@@ -3,9 +3,18 @@ package dto;
 import java.sql.Date;
 
 public class Employee {
+    private int id;
     private String firstName;
     private String lastName;
     private Date birthdate;
+
+
+    public Employee(int id, String firstName, String lastName, Date birthdate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+    }
 
     public Employee(String firstName, String lastName, Date birthdate) {
         this.firstName = firstName;
@@ -16,6 +25,14 @@ public class Employee {
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
