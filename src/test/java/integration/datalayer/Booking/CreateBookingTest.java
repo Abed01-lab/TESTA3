@@ -9,6 +9,7 @@ import datalayer.employee.EmployeeStorageImpl;
 import dto.Booking;
 import dto.CustomerCreation;
 import dto.Employee;
+import dto.EmployeeCreation;
 import integration.ContainerizedDbIntegrationTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -38,7 +39,7 @@ public class CreateBookingTest extends ContainerizedDbIntegrationTest {
 
     @Test
     public void createBookingTest() throws SQLException {
-        int employeeId = employeeStorage.createEmployee(new Employee("Abed", "Hariri", Date.valueOf("1997-07-14")));
+        int employeeId = employeeStorage.createEmployee(new EmployeeCreation("Abed", "Hariri", Date.valueOf("1997-07-14")));
         int customerId = customerStorage.createCustomer(new CustomerCreation("John", "Doe"));
         bookingStorage.createBooking(new Booking(employeeId, customerId, Date.valueOf("2022-03-24"), Time.valueOf("14:00:00"), Time.valueOf("15:00:00")));
 
@@ -52,7 +53,7 @@ public class CreateBookingTest extends ContainerizedDbIntegrationTest {
 
     @Test
     public void getBookingWithIdTest() throws SQLException {
-        int employeeId = employeeStorage.createEmployee(new Employee("Abed", "Hariri", Date.valueOf("1997-07-14")));
+        int employeeId = employeeStorage.createEmployee(new EmployeeCreation("Abed", "Hariri", Date.valueOf("1997-07-14")));
         int customerId = customerStorage.createCustomer(new CustomerCreation("John", "Doe"));
         int bookingId = bookingStorage.createBooking(new Booking(employeeId, customerId, Date.valueOf("2022-03-24"), Time.valueOf("14:00:00"), Time.valueOf("15:00:00")));
 

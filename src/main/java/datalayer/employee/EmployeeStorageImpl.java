@@ -2,6 +2,7 @@ package datalayer.employee;
 
 import dto.Customer;
 import dto.Employee;
+import dto.EmployeeCreation;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,13 +25,13 @@ public class EmployeeStorageImpl implements EmployeeStorage{
         return DriverManager.getConnection(connectionString, username, password);
     }
     @Override
-    public int createEmployee(Employee employee) throws SQLException {
+    public int createEmployee(EmployeeCreation employeeCreation) throws SQLException {
         var sql = "insert into Employees(firstname, lastname, birthdate) values (?, ?, ?)";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, employee.getFirstName());
-            stmt.setString(2, employee.getLastName());
-            stmt.setDate(3, employee.getBirthdate());
+            stmt.setString(1, employeeCreation.getFirstName());
+            stmt.setString(2, employeeCreation.getLastName());
+            stmt.setDate(3, employeeCreation.getBirthdate());
             stmt.executeUpdate();
 
             // get the newly created id

@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import datalayer.employee.EmployeeStorage;
 import datalayer.employee.EmployeeStorageImpl;
 import dto.Employee;
+import dto.EmployeeCreation;
 import integration.ContainerizedDbIntegrationTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -38,7 +39,7 @@ class CreateEmployeeTest extends ContainerizedDbIntegrationTest {
     private void addFakeCustomers(int numCustomers) throws SQLException {
         Faker faker = new Faker();
         for (int i = 0; i < numCustomers; i++) {
-            Employee c = new Employee(faker.name().firstName(), faker.name().lastName(), Date.valueOf("2000-14-30"));
+            EmployeeCreation c = new EmployeeCreation(faker.name().firstName(), faker.name().lastName(), Date.valueOf("2000-12-30"));
             employeeStorage.createEmployee(c);
         }
 
@@ -48,7 +49,7 @@ class CreateEmployeeTest extends ContainerizedDbIntegrationTest {
     public void createEmployeeTest() throws SQLException {
         // Arrange
         // Act
-        employeeStorage.createEmployee(new Employee("John","Carlssonn", Date.valueOf("1997-07-14")));
+        employeeStorage.createEmployee(new EmployeeCreation("John","Carlssonn", Date.valueOf("1997-07-14")));
 
         // Assert
         var employees = employeeStorage.getEmployees();
@@ -61,7 +62,7 @@ class CreateEmployeeTest extends ContainerizedDbIntegrationTest {
 
     @Test
     public void getEmployeeWithIdTest() throws SQLException {
-        int id = employeeStorage.createEmployee(new Employee("Carl", "Johnson", Date.valueOf("1997-07-14")));
+        int id = employeeStorage.createEmployee(new EmployeeCreation("Carl", "Johnson", Date.valueOf("1997-07-14")));
         Employee e = employeeStorage.getEmployeeWithId(id);
         assertTrue(e.getFirstName().equals("Carl") && e.getLastName().equals("Johnson") && e.getBirthdate().equals(Date.valueOf("1997-07-14")));
     }
